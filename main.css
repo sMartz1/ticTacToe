@@ -30,9 +30,12 @@ main {
 }
 
 .item {
+    width: 70px;
+    height: 70px;
     padding: 10px;
     font-size: 48px;
     background-color: tan;
+    text-align: center;
 }
 
 .row {
