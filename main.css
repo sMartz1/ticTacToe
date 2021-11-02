@@ -1,0 +1,45 @@
+body {
+    min-height: 950px;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgb(235, 140, 140);
+}
+
+main {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.players {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    background-color: sandybrown;
+}
+
+.game-container {
+    background-color: seagreen;
+    margin-top: 200px;
+}
+
+.game-screen {
+    display: flex;
+    flex-flow: column;
+    padding: 5px;
+}
+
+.item {
+    padding: 10px;
+    font-size: 48px;
+    background-color: tan;
+}
+
+.row {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.row>.item:nth-child(2) {
+    margin: 0px 5px;
+}
