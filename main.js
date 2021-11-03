@@ -22,14 +22,7 @@ function draw() {
         tempRow.classList.add("row");
         for (let i = 0; i < currentState.length; i++) {
 
-            let item = document.createElement("div");
-            item.classList.add("item");
-            item.setAttribute("position", i);
-            item.addEventListener("click", e => {
-                currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer;
-                draw();
-            });
-            item.innerHTML = currentState[i] == 0 ? "" : currentState[i] == 1 ? "X" : "O";
+            let item = createItem(i);
             tempRow.appendChild(item);
             rowC++;
             if (rowC == 3) {
@@ -41,14 +34,39 @@ function draw() {
             }
         }
     }
+    //Function create item
+    function createItem(pos) {
+        let tempElement = document.createElement("div");
+        tempElement.classList.add("item");
+        tempElement.setAttribute("position", pos);
+        tempElement.addEventListener("click", clickItem);
+        tempElement.innerHTML = currentState[pos] == 0 ? "" : currentState[pos] == 1 ? "X" : "O";
+        return tempElement;
+    }
+
+    function clickItem(e) {
+        if (isPlaying) {
+            currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer;
+            draw();
+        }
+
+
+    }
 }
+
+let startButton = document.getElementById("start-button");
 
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    startButton.classList.remove("no-visibility");
+    isPlaying = false;
     draw();
 }
 
-
+function start() {
+    isPlaying = true;
+    startButton.classList.add("no-visibility");
+}
 
 
 draw();

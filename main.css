@@ -11,6 +11,10 @@ main {
     align-items: center;
 }
 
+.no-visibility {
+    display: none;
+}
+
 .players {
     display: flex;
     width: 100%;
@@ -55,6 +59,11 @@ main {
     justify-content: center;
     align-items: center;
     background-color: blueviolet;
-    height: 50px;
-    width: 200px;
+}
+
+.start-button {
+    background-color: brown;
+    margin-top: 150px;
+    text-align: center;
+    padding: 20px 10px;
 }
