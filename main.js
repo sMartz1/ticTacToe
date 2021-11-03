@@ -9,6 +9,7 @@ let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 //Function to draw all the items
 function draw() {
     //We remove all childs from gameScreen
+
     let container = document.getElementById("screen");
     while (container.firstChild) {
         container.firstChild.remove()
@@ -34,6 +35,8 @@ function draw() {
             }
         }
     }
+    currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
+    currentPlayerRender();
     //Function create item
     function createItem(pos) {
         let tempElement = document.createElement("div");
@@ -45,13 +48,31 @@ function draw() {
     }
 
     function clickItem(e) {
-        if (isPlaying) {
-            currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer;
+        if (isPlaying && e.target.innerHTML == "") {
+            currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
             draw();
+
         }
 
 
     }
+
+
+}
+
+function currentPlayerRender() {
+    let player1 = document.getElementById("player-1");
+    let player2 = document.getElementById("player-2");
+    if (isPlaying) {
+        if (currentPlayer == 0) {
+            player2.classList.add("no-visibility");
+            player1.classList.remove("no-visibility");
+        } else {
+            player1.classList.add("no-visibility");
+            player2.classList.remove("no-visibility");
+        }
+    }
+
 }
 
 let startButton = document.getElementById("start-button");
@@ -65,7 +86,9 @@ function resetClick() {
 
 function start() {
     isPlaying = true;
+    currentPlayer = 0;
     startButton.classList.add("no-visibility");
+    currentPlayerRender();
 }
 
 
