@@ -19,6 +19,9 @@ main {
 }
 
 .game-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     background-color: seagreen;
     margin-top: 200px;
 }
@@ -45,4 +48,13 @@ main {
 
 .row>.item:nth-child(2) {
     margin: 0px 5px;
+}
+
+.reset-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blueviolet;
+    height: 50px;
+    width: 200px;
 }
