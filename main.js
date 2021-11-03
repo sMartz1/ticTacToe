@@ -59,10 +59,11 @@ function draw() {
 
 
 }
+let player1 = document.getElementById("player-1");
+let player2 = document.getElementById("player-2");
 
 function currentPlayerRender() {
-    let player1 = document.getElementById("player-1");
-    let player2 = document.getElementById("player-2");
+
     if (isPlaying) {
         if (currentPlayer == 0) {
             player2.classList.add("no-visibility");
@@ -80,6 +81,8 @@ let startButton = document.getElementById("start-button");
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     startButton.classList.remove("no-visibility");
+    player1.classList.remove("no-visibility");
+    player2.classList.remove("no-visibility");
     isPlaying = false;
     draw();
 }
