@@ -11,10 +11,6 @@ main {
     align-items: center;
 }
 
-.no-visibility {
-    display: none;
-}
-
 .players {
     display: flex;
     width: 100%;
@@ -71,4 +67,8 @@ main {
 #result {
     font-size: 48px;
     padding-top: 50px;
+}
+
+.no-visibility {
+    display: none;
 }

@@ -6,6 +6,10 @@ let isPlaying = false;
 let isWin = false;
 let winner = 0;
 let turn = 0;
+let player1 = document.getElementById("player-1");
+let player2 = document.getElementById("player-2");
+let gameContainer = document.getElementsByClassName("game-container")[0];
+let startButton = document.getElementById("start-button");
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -14,12 +18,14 @@ function draw() {
     //We remove all childs from gameScreen
 
     let container = document.getElementById("screen");
+
+    let rowI = 0;
+    let rowC = 0;
     while (container.firstChild) {
         container.firstChild.remove()
     }
 
-    let rowI = 0;
-    let rowC = 0;
+
     //We create the 3 rows with 3 elements each one and draw the content depending on currentState
     while (rowI < 3) {
         let tempRow = document.createElement("div");
@@ -78,9 +84,9 @@ function draw() {
 
 
 }
-let player1 = document.getElementById("player-1");
-let player2 = document.getElementById("player-2");
 
+
+//Change the header to the current player
 function currentPlayerRender() {
 
     if (isPlaying) {
@@ -95,22 +101,26 @@ function currentPlayerRender() {
 
 }
 
-let startButton = document.getElementById("start-button");
 
+//Function to reset the game
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     startButton.classList.remove("no-visibility");
     player1.classList.remove("no-visibility");
     player2.classList.remove("no-visibility");
+    gameContainer.classList.add("no-visibility");
     isPlaying = false;
     turn = 0;
     isWin = false;
     document.getElementById("result").innerHTML = ""
+
     draw();
 }
 
+//Function to start the game
 function start() {
     isPlaying = true;
+    gameContainer.classList.remove("no-visibility");
     currentPlayer = 0;
     turn = 1;
     startButton.classList.add("no-visibility");
@@ -118,7 +128,7 @@ function start() {
 }
 
 
-
+//LOGIC
 function checkStateGame() {
 
     if (turn > 5) {
@@ -200,5 +210,7 @@ function checkStateGame() {
         }
     }
 }
+
+//Run draw func at the start
 
 draw();
