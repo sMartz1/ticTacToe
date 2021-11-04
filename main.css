@@ -67,3 +67,8 @@ main {
     text-align: center;
     padding: 20px 10px;
 }
+
+#result {
+    font-size: 48px;
+    padding-top: 50px;
+}
