@@ -3,6 +3,8 @@
 // 0 = player1   1 = player2
 let currentPlayer = 1;
 let isPlaying = false;
+let isWin = false;
+let winner = 0;
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -37,6 +39,13 @@ function draw() {
     }
     currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
     currentPlayerRender();
+    checkStateGame();
+    if (isWin) {
+        document.getElementById("result").innerHTML = "Ha acabado la partida"
+        isPlaying = false;
+
+    }
+
     //Function create item
     function createItem(pos) {
         let tempElement = document.createElement("div");
@@ -84,15 +93,103 @@ function resetClick() {
     player1.classList.remove("no-visibility");
     player2.classList.remove("no-visibility");
     isPlaying = false;
+    turn = 0;
+    isWin = false;
+    document.getElementById("result").innerHTML = ""
     draw();
 }
 
 function start() {
     isPlaying = true;
     currentPlayer = 0;
+    turn = 1;
     startButton.classList.add("no-visibility");
     currentPlayerRender();
 }
 
+let turn = 0;
+
+
+
+function checkStateGame() {
+    //Check from pos 1
+    console.log("Check");
+    if (currentState[0] == "1" || currentState[0] == "2") {
+        console.log("Check 1");
+        if (currentState[0] == currentState[1]) {
+            console.log("Check 1-2");
+            if (currentState[1] == currentState[2]) {
+                console.log("Check 1-2 2");
+                isWin = true;
+                winner = currentState[0];
+                return
+            }
+        }
+        if (currentState[0] == currentState[3]) {
+            if (currentState[3] == currentState[6]) {
+                isWin = true;
+                winner = currentState[0];
+                return
+            }
+        }
+        if (currentState[0] == currentState[4]) {
+            if (currentState[4] == currentState[6]) {
+                isWin = true;
+                winner = currentState[0];
+                return
+            }
+        }
+
+
+    }
+    if (currentState[1] == "1" || currentState[1] == "2") {
+        console.log("2");
+        if (currentState[1] == currentState[4]) {
+            console.log("2-2");
+            if (currentState[4] == currentState[7]) {
+                console.log("2-2-2");
+                isWin = true;
+                winner = currentState[1];
+                return
+            }
+        }
+    }
+    if (currentState[2] == "1" || currentState[2] == "2") {
+        if (currentState[2] == currentState[4]) {
+            if (currentState[4] == currentState[6]) {
+                isWin = true;
+                winner = currentState[2];
+                return
+            }
+        }
+        if (currentState[2] == currentState[5]) {
+            if (currentState[5] == currentState[8]) {
+                isWin = true;
+                winner = currentState[2];
+                return
+            }
+        }
+    }
+    if (currentState[3] == "1" || currentState[3] == "2") {
+        if (currentState[3] == currentState[4]) {
+            if (currentState[4] == currentState[5]) {
+                isWin = true;
+                winner = currentState[3];
+                return
+            }
+        }
+    }
+    if (currentState[6] == "1" || currentState[6] == "2") {
+        if (currentState[6] == currentState[7]) {
+            if (currentState[7] == currentState[8]) {
+                isWin = true;
+                winner = currentState[6]
+                return
+
+            }
+        }
+
+    }
+}
 
 draw();
