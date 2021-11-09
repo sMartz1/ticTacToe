@@ -20,41 +20,42 @@ main {
 
 .players {
     display: flex;
+    position: absolute;
+    margin-top: 10rem;
     width: 100%;
     justify-content: space-around;
-    background-color: sandybrown;
+    font-size: 10rem;
 }
 
 .game-container {
     display: flex;
     flex-flow: column;
     align-items: center;
-    background-color: seagreen;
-    margin-top: 200px;
 }
 
 .game-screen {
     display: flex;
     flex-flow: column;
     padding: 5px;
+    margin-top: 7rem;
 }
 
 .item {
     width: 70px;
     height: 70px;
     padding: 10px;
-    font-size: 48px;
-    background-color: tan;
+    font-size: 8em;
     text-align: center;
+    cursor: pointer;
 }
 
 .row {
-    margin-bottom: 5px;
+    margin-bottom: 2rem;
     display: flex;
 }
 
 .row>.item:nth-child(2) {
-    margin: 0px 5px;
+    margin: 0px 2rem;
 }
 
 .reset-button {
@@ -70,6 +71,7 @@ main {
     text-align: center;
     padding: 20px 10px;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .start-button:hover {
@@ -88,6 +90,7 @@ main {
 .title {
     margin-top: 5rem;
     font-size: 8rem;
+    transition: 1s;
 }
 
 .title::after {
@@ -109,4 +112,35 @@ main {
         transform: scale(3, 0.4);
         margin-left: -0.67em;
     }
+}
+
+.in-game-header {
+    margin-top: 2rem;
+}
+
+.in-game-header::after {
+    top: -14rem;
+    transition: 1s;
+}
+
+.line {
+    position: absolute;
+    font-size: 14em;
+    pointer-events: none;
+}
+
+.vertical-line {
+    transform: scale(0.6, 6) rotate(90deg) translate(32px, 50px);
+}
+
+.vertical-line.right-line {
+    margin-left: 14rem;
+}
+
+.horizontal-line {
+    transform: scale(5, 0.6) translate(0px, 160px);
+}
+
+.horizontal-line.right-line {
+    margin-top: 8rem;
 }

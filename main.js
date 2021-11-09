@@ -6,6 +6,7 @@ let isPlaying = false;
 let isWin = false;
 let winner = 0;
 let turn = 0;
+let playersCointainer = document.getElementById("players");
 let player1 = document.getElementById("player-1");
 let player2 = document.getElementById("player-2");
 let gameContainer = document.getElementsByClassName("game-container")[0];
@@ -13,10 +14,14 @@ let startButton = document.getElementById("start-button");
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-//Function to draw all the items
+/**
+ * Function to draw all the items
+ * @param email {string}
+ * @return  {boolean}
+ */
+
 function draw() {
     //We remove all childs from gameScreen
-
     let container = document.getElementById("screen");
 
     let rowI = 0;
@@ -47,10 +52,11 @@ function draw() {
     currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
     currentPlayerRender();
     checkStateGame();
-    if (isWin || turn == 9) {
+    if (isWin || turn == 10) {
+        playersCointainer.classList.add("no-visibility");
         if (isWin) {
             let winnerStr = winner == 0 ? "Player 2" : "Player 1"
-            document.getElementById("result").innerHTML = "Ha acabado la partida " + winnerStr;
+            document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
         }
@@ -59,7 +65,11 @@ function draw() {
 
     }
 
-    //Function create item
+    /**
+     * Verifies if the string is in a valid email format
+     * @param item position value {int}
+     * @return  {HTMLElement}
+     */
     function createItem(pos) {
         let tempElement = document.createElement("div");
         tempElement.classList.add("item");
@@ -85,8 +95,10 @@ function draw() {
 
 }
 
+/**
+ * Change the header to the current player
+ */
 
-//Change the header to the current player
 function currentPlayerRender() {
 
     if (isPlaying) {
@@ -101,8 +113,9 @@ function currentPlayerRender() {
 
 }
 
-
-//Function to reset the game
+/**
+ * Function to reset the game
+ */
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     startButton.classList.remove("no-visibility");
@@ -117,18 +130,25 @@ function resetClick() {
     draw();
 }
 
-//Function to start the game
+/**
+ * Function to start the game
+ */
 function start() {
+    let title = document.getElementById("title");
+    title.classList.add("in-game-header");
+    playersCointainer.classList.remove("no-visibility");
     isPlaying = true;
     gameContainer.classList.remove("no-visibility");
+
     currentPlayer = 0;
     turn = 1;
     startButton.classList.add("no-visibility");
     currentPlayerRender();
 }
 
-
-//LOGIC
+/**
+ * Function to check if the game ended.
+ */
 function checkStateGame() {
 
     if (turn > 5) {
