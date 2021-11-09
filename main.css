@@ -1,14 +1,21 @@
+@font-face {
+    font-family: 'write';
+    src: url('font-write.ttf');
+}
+
 body {
     min-height: 950px;
     width: 100%;
     overflow: hidden;
-    background-color: rgb(235, 140, 140);
+    background: radial-gradient(#ffffff, #c3c3c3);
 }
 
 main {
     display: flex;
     flex-flow: column;
     align-items: center;
+    font-family: write;
+    color: #2d3436;
 }
 
 .players {
@@ -58,10 +65,15 @@ main {
 }
 
 .start-button {
-    background-color: brown;
+    font-size: 5rem;
     margin-top: 150px;
     text-align: center;
     padding: 20px 10px;
+    transition: 0.5s;
+}
+
+.start-button:hover {
+    transform: scale(1.2);
 }
 
 #result {
@@ -71,4 +83,30 @@ main {
 
 .no-visibility {
     display: none;
+}
+
+.title {
+    margin-top: 5rem;
+    font-size: 8rem;
+}
+
+.title::after {
+    content: "_";
+    position: absolute;
+    font-size: 40rem;
+    transform: scale(3, 0.4);
+    margin-left: -0.67em;
+    top: -11rem;
+    animation: left-to-right 0.5s ease-out;
+}
+
+@keyframes left-to-right {
+    from {
+        transform: scale(0.1, 0.4);
+        margin-left: -1.1em;
+    }
+    to {
+        transform: scale(3, 0.4);
+        margin-left: -0.67em;
+    }
 }
