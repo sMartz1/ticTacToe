@@ -49,13 +49,14 @@ function draw() {
             }
         }
     }
+
     currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
     currentPlayerRender();
     checkStateGame();
     if (isWin || turn == 10) {
         playersCointainer.classList.add("no-visibility");
         if (isWin) {
-            let winnerStr = winner == 0 ? "Player 2" : "Player 1"
+            let winnerStr = winner == 1 ? "Player 1" : "Player 2"
             document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
@@ -64,6 +65,8 @@ function draw() {
         isPlaying = false;
 
     }
+
+
 
     /**
      * Verifies if the string is in a valid email format
@@ -75,13 +78,17 @@ function draw() {
         tempElement.classList.add("item");
         tempElement.setAttribute("position", pos);
         tempElement.addEventListener("click", clickItem);
+        tempElement.addEventListener("mouseenter", mouseEnterItem);
+        tempElement.addEventListener("mouseleave", mouseLeaveItem);
+
         tempElement.innerHTML = currentState[pos] == 0 ? "" : currentState[pos] == 1 ? "X" : "O";
         return tempElement;
     }
+    let tempFilled = false;
 
     function clickItem(e) {
-        if (isPlaying && e.target.innerHTML == "") {
-
+        if (isPlaying && tempFilled) {
+            tempFilled = false;
             currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
             turn++;
             draw();
@@ -90,6 +97,23 @@ function draw() {
         }
 
 
+    }
+
+
+    function mouseEnterItem(e) {
+        if (e.target.innerHTML == "") {
+            tempFilled = true;
+            e.target.innerHTML = currentPlayer == 0 ? "X" : "O"
+            e.target.classList.add("item-hint");
+        }
+    }
+
+    function mouseLeaveItem(e) {
+        if (tempFilled) {
+            tempFilled = false;
+            e.target.innerHTML = "";
+            e.target.classList.remove("item-hint");
+        }
     }
 
 

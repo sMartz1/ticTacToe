@@ -49,6 +49,10 @@ main {
     cursor: pointer;
 }
 
+.item-hint {
+    color: #adadad;
+}
+
 .row {
     margin-bottom: 2rem;
     display: flex;
