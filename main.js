@@ -14,6 +14,7 @@ let player1 = document.getElementById("player-1");
 let player2 = document.getElementById("player-2");
 let gameContainer = document.getElementsByClassName("game-container")[0];
 let startButton = document.getElementById("start-button");
+let timerElement = document.getElementById("time-bar");
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -61,6 +62,7 @@ function draw() {
         if (isWin) {
             let winnerStr = winner == 1 ? "Player 1" : "Player 2"
             document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
+            timerElement.classList.add("no-visibility");
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
         }
@@ -145,7 +147,7 @@ function currentPlayerRender() {
  */
 
 function startTimer() {
-    let timerElement = document.getElementById("time-bar");
+
 
     timerElement.innerHTML = currentTime;
 
