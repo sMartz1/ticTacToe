@@ -6,6 +6,9 @@ let isPlaying = false;
 let isWin = false;
 let winner = 0;
 let turn = 0;
+let roundTime = 16;
+let currentTime = 15;
+let scores = [0, 0];
 let playersCointainer = document.getElementById("players");
 let player1 = document.getElementById("player-1");
 let player2 = document.getElementById("player-2");
@@ -91,6 +94,7 @@ function draw() {
             tempFilled = false;
             currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
             turn++;
+            currentTime = roundTime;
             draw();
 
 
@@ -136,7 +140,61 @@ function currentPlayerRender() {
     }
 
 }
+/**
+ * Function to start the timer
+ */
 
+function startTimer() {
+    let timerElement = document.getElementById("time-bar");
+
+    timerElement.innerHTML = currentTime;
+
+    let loopTimer = setInterval(() => {
+
+        if (currentTime <= 0.5) {
+            currentTime = roundTime;
+            randomPick();
+        } else {
+            currentTime -= 0.2;
+            timerElement.innerHTML = parseInt(currentTime);
+        }
+        if (!isPlaying) {
+            clearInterval(loopTimer);
+        }
+
+    }, 200);
+
+
+}
+
+function randomPick() {
+    let choiceMake = false;
+    while (!choiceMake) {
+        for (let index = 0; index < currentState.length; index++) {
+
+            if (currentState[index] == "") {
+                let randomNumber = getRandomInt(0, 5);
+                if (randomNumber == 1 && !choiceMake) {
+                    currentState[index] = currentPlayer + 1;
+                    choiceMake = true;
+                }
+
+            }
+        }
+    }
+
+    currentTime = roundTime;
+    turn++;
+    draw();
+
+}
+
+/**
+ * Retorna un entero aleatorio entre min (incluido) y max (excluido)
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 /**
  * Function to reset the game
  */
@@ -163,11 +221,12 @@ function start() {
     playersCointainer.classList.remove("no-visibility");
     isPlaying = true;
     gameContainer.classList.remove("no-visibility");
-
     currentPlayer = 0;
     turn = 1;
     startButton.classList.add("no-visibility");
+    startTimer();
     currentPlayerRender();
+
 }
 
 /**

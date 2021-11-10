@@ -8,6 +8,8 @@ body {
     width: 100%;
     overflow: hidden;
     background: radial-gradient(#ffffff, #c3c3c3);
+    background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.2em;
 }
 
 main {
@@ -15,22 +17,23 @@ main {
     flex-flow: column;
     align-items: center;
     font-family: write;
-    color: #2d3436;
+    color: #2d3436c9;
 }
 
 .players {
     display: flex;
     position: absolute;
-    margin-top: 10rem;
+    margin-top: 16rem;
     width: 100%;
     justify-content: space-around;
-    font-size: 10rem;
+    font-size: 5rem;
 }
 
 .game-container {
     display: flex;
     flex-flow: column;
     align-items: center;
+    margin-top: 2.4rem;
 }
 
 .game-screen {
@@ -101,10 +104,9 @@ main {
     content: "_";
     position: absolute;
     font-size: 40rem;
-    transform: scale(3, 0.4);
+    transform: scale(var(--widthTime, 3), 0.4);
     margin-left: -0.67em;
     top: -11rem;
-    animation: left-to-right 0.5s ease-out;
 }
 
 @keyframes left-to-right {
@@ -147,4 +149,8 @@ main {
 
 .horizontal-line.right-line {
     margin-top: 8rem;
+}
+
+#time-bar {
+    font-size: 6rem;
 }
