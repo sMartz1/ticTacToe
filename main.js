@@ -15,6 +15,7 @@ let player2 = document.getElementById("player-2");
 let gameContainer = document.getElementsByClassName("game-container")[0];
 let startButton = document.getElementById("start-button");
 let timerElement = document.getElementById("time-bar");
+let replay = document.getElementById("reset-button");
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -53,15 +54,18 @@ function draw() {
             }
         }
     }
-
     currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
     currentPlayerRender();
+
     checkStateGame();
     if (isWin || turn == 10) {
         playersCointainer.classList.add("no-visibility");
+        replay.classList.remove("no-visibility");
         if (isWin) {
             let winnerStr = winner == 1 ? "Player 1" : "Player 2"
             document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
+            scores[winner == 1 ? 0 : 1]++;
+            updateScores();
             timerElement.classList.add("no-visibility");
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
@@ -107,7 +111,8 @@ function draw() {
 
 
     function mouseEnterItem(e) {
-        if (e.target.innerHTML == "") {
+
+        if (e.target.innerHTML == "" && isPlaying) {
             tempFilled = true;
             e.target.innerHTML = currentPlayer == 0 ? "X" : "O"
             e.target.classList.add("item-hint");
@@ -115,11 +120,18 @@ function draw() {
     }
 
     function mouseLeaveItem(e) {
-        if (tempFilled) {
+        if (tempFilled && isPlaying) {
             tempFilled = false;
             e.target.innerHTML = "";
             e.target.classList.remove("item-hint");
         }
+    }
+
+    function updateScores() {
+        document.getElementById("score-text-p1").innerHTML = `X = ${scores[0]}`;
+        document.getElementById("score-text-p2").innerHTML = `O = ${scores[1]}`;
+
+
     }
 
 
@@ -202,16 +214,14 @@ function getRandomInt(min, max) {
  */
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    startButton.classList.remove("no-visibility");
-    player1.classList.remove("no-visibility");
-    player2.classList.remove("no-visibility");
     gameContainer.classList.add("no-visibility");
-    isPlaying = false;
-    turn = 0;
-    isWin = false;
+    replay.classList.add("no-visibility");
     document.getElementById("result").innerHTML = ""
-
+    start();
+    currentPlayer = 1;
     draw();
+
+
 }
 
 /**
@@ -219,11 +229,15 @@ function resetClick() {
  */
 function start() {
     let title = document.getElementById("title");
+    let scoresContainer = document.getElementById("scores");
     title.classList.add("in-game-header");
     playersCointainer.classList.remove("no-visibility");
-    isPlaying = true;
     gameContainer.classList.remove("no-visibility");
-    currentPlayer = 0;
+    timerElement.classList.remove("no-visibility");
+    scoresContainer.classList.remove("no-visibility");
+    currentTime = 15;
+    isPlaying = true;
+    isWin = false;
     turn = 1;
     startButton.classList.add("no-visibility");
     startTimer();
