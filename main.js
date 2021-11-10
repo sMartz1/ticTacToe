@@ -6,6 +6,10 @@ let isPlaying = false;
 let isWin = false;
 let winner = 0;
 let turn = 0;
+let roundTime = 16;
+let currentTime = 15;
+let scores = [0, 0];
+let playersCointainer = document.getElementById("players");
 let player1 = document.getElementById("player-1");
 let player2 = document.getElementById("player-2");
 let gameContainer = document.getElementsByClassName("game-container")[0];
@@ -13,10 +17,14 @@ let startButton = document.getElementById("start-button");
 // 0 = empty  1 = X   2 = 0
 let currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-//Function to draw all the items
+/**
+ * Function to draw all the items
+ * @param email {string}
+ * @return  {boolean}
+ */
+
 function draw() {
     //We remove all childs from gameScreen
-
     let container = document.getElementById("screen");
 
     let rowI = 0;
@@ -44,13 +52,15 @@ function draw() {
             }
         }
     }
+
     currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
     currentPlayerRender();
     checkStateGame();
-    if (isWin || turn == 9) {
+    if (isWin || turn == 10) {
+        playersCointainer.classList.add("no-visibility");
         if (isWin) {
-            let winnerStr = winner == 0 ? "Player 2" : "Player 1"
-            document.getElementById("result").innerHTML = "Ha acabado la partida " + winnerStr;
+            let winnerStr = winner == 1 ? "Player 1" : "Player 2"
+            document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
         }
@@ -59,21 +69,32 @@ function draw() {
 
     }
 
-    //Function create item
+
+
+    /**
+     * Verifies if the string is in a valid email format
+     * @param item position value {int}
+     * @return  {HTMLElement}
+     */
     function createItem(pos) {
         let tempElement = document.createElement("div");
         tempElement.classList.add("item");
         tempElement.setAttribute("position", pos);
         tempElement.addEventListener("click", clickItem);
+        tempElement.addEventListener("mouseenter", mouseEnterItem);
+        tempElement.addEventListener("mouseleave", mouseLeaveItem);
+
         tempElement.innerHTML = currentState[pos] == 0 ? "" : currentState[pos] == 1 ? "X" : "O";
         return tempElement;
     }
+    let tempFilled = false;
 
     function clickItem(e) {
-        if (isPlaying && e.target.innerHTML == "") {
-
+        if (isPlaying && tempFilled) {
+            tempFilled = false;
             currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
             turn++;
+            currentTime = roundTime;
             draw();
 
 
@@ -83,10 +104,29 @@ function draw() {
     }
 
 
+    function mouseEnterItem(e) {
+        if (e.target.innerHTML == "") {
+            tempFilled = true;
+            e.target.innerHTML = currentPlayer == 0 ? "X" : "O"
+            e.target.classList.add("item-hint");
+        }
+    }
+
+    function mouseLeaveItem(e) {
+        if (tempFilled) {
+            tempFilled = false;
+            e.target.innerHTML = "";
+            e.target.classList.remove("item-hint");
+        }
+    }
+
+
 }
 
+/**
+ * Change the header to the current player
+ */
 
-//Change the header to the current player
 function currentPlayerRender() {
 
     if (isPlaying) {
@@ -100,9 +140,64 @@ function currentPlayerRender() {
     }
 
 }
+/**
+ * Function to start the timer
+ */
+
+function startTimer() {
+    let timerElement = document.getElementById("time-bar");
+
+    timerElement.innerHTML = currentTime;
+
+    let loopTimer = setInterval(() => {
+
+        if (currentTime <= 0.5) {
+            currentTime = roundTime;
+            randomPick();
+        } else {
+            currentTime -= 0.2;
+            timerElement.innerHTML = parseInt(currentTime);
+        }
+        if (!isPlaying) {
+            clearInterval(loopTimer);
+        }
+
+    }, 200);
 
 
-//Function to reset the game
+}
+
+function randomPick() {
+    let choiceMake = false;
+    while (!choiceMake) {
+        for (let index = 0; index < currentState.length; index++) {
+
+            if (currentState[index] == "") {
+                let randomNumber = getRandomInt(0, 5);
+                if (randomNumber == 1 && !choiceMake) {
+                    currentState[index] = currentPlayer + 1;
+                    choiceMake = true;
+                }
+
+            }
+        }
+    }
+
+    currentTime = roundTime;
+    turn++;
+    draw();
+
+}
+
+/**
+ * Retorna un entero aleatorio entre min (incluido) y max (excluido)
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+/**
+ * Function to reset the game
+ */
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     startButton.classList.remove("no-visibility");
@@ -117,18 +212,26 @@ function resetClick() {
     draw();
 }
 
-//Function to start the game
+/**
+ * Function to start the game
+ */
 function start() {
+    let title = document.getElementById("title");
+    title.classList.add("in-game-header");
+    playersCointainer.classList.remove("no-visibility");
     isPlaying = true;
     gameContainer.classList.remove("no-visibility");
     currentPlayer = 0;
     turn = 1;
     startButton.classList.add("no-visibility");
+    startTimer();
     currentPlayerRender();
+
 }
 
-
-//LOGIC
+/**
+ * Function to check if the game ended.
+ */
 function checkStateGame() {
 
     if (turn > 5) {

@@ -1,53 +1,68 @@
+@font-face {
+    font-family: 'write';
+    src: url('font-write.ttf');
+}
+
 body {
     min-height: 950px;
     width: 100%;
     overflow: hidden;
-    background-color: rgb(235, 140, 140);
+    background: radial-gradient(#ffffff, #c3c3c3);
+    background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.2em;
 }
 
 main {
     display: flex;
     flex-flow: column;
     align-items: center;
+    font-family: write;
+    color: #2d3436c9;
 }
 
 .players {
     display: flex;
+    position: absolute;
+    margin-top: 16rem;
     width: 100%;
     justify-content: space-around;
-    background-color: sandybrown;
+    font-size: 5rem;
 }
 
 .game-container {
     display: flex;
     flex-flow: column;
     align-items: center;
-    background-color: seagreen;
-    margin-top: 200px;
+    margin-top: 2.4rem;
 }
 
 .game-screen {
     display: flex;
     flex-flow: column;
     padding: 5px;
+    margin-top: 7rem;
 }
 
 .item {
     width: 70px;
     height: 70px;
     padding: 10px;
-    font-size: 48px;
-    background-color: tan;
+    font-size: 8em;
     text-align: center;
+    cursor: pointer;
+}
+
+.item-hint {
+    color: #adadad;
 }
 
 .row {
-    margin-bottom: 5px;
+    margin-bottom: 2rem;
     display: flex;
 }
 
 .row>.item:nth-child(2) {
-    margin: 0px 5px;
+    margin: 0px 2rem;
 }
 
 .reset-button {
@@ -58,10 +73,16 @@ main {
 }
 
 .start-button {
-    background-color: brown;
+    font-size: 5rem;
     margin-top: 150px;
     text-align: center;
     padding: 20px 10px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    transform: scale(1.2);
 }
 
 #result {
@@ -71,4 +92,65 @@ main {
 
 .no-visibility {
     display: none;
+}
+
+.title {
+    margin-top: 5rem;
+    font-size: 8rem;
+    transition: 1s;
+}
+
+.title::after {
+    content: "_";
+    position: absolute;
+    font-size: 40rem;
+    transform: scale(var(--widthTime, 3), 0.4);
+    margin-left: -0.67em;
+    top: -11rem;
+}
+
+@keyframes left-to-right {
+    from {
+        transform: scale(0.1, 0.4);
+        margin-left: -1.1em;
+    }
+    to {
+        transform: scale(3, 0.4);
+        margin-left: -0.67em;
+    }
+}
+
+.in-game-header {
+    margin-top: 2rem;
+}
+
+.in-game-header::after {
+    top: -14rem;
+    transition: 1s;
+}
+
+.line {
+    position: absolute;
+    font-size: 14em;
+    pointer-events: none;
+}
+
+.vertical-line {
+    transform: scale(0.6, 6) rotate(90deg) translate(32px, 50px);
+}
+
+.vertical-line.right-line {
+    margin-left: 14rem;
+}
+
+.horizontal-line {
+    transform: scale(5, 0.6) translate(0px, 160px);
+}
+
+.horizontal-line.right-line {
+    margin-top: 8rem;
+}
+
+#time-bar {
+    font-size: 6rem;
 }

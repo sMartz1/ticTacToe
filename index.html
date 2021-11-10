@@ -5,29 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe!</title>
+    <title>Tic Tac Toe !</title>
     <link rel="stylesheet" href="main.css">
 
 </head>
 
 <body>
     <main>
-        <div class="players">
-            <div id="player-1" class="left-player">Player1</div>
-            <div id="player-2" class="right-player">Player2</div>
+        <div id="title" class="title">TIC TAC TOE</div>
+        <div id="time-bar"></div>
+
+        <div id="players" class="players">
+            <div id="player-1" class="left-player no-visibility">Player1</div>
+            <div id="player-2" class="right-player no-visibility">Player2</div>
 
         </div>
         <div id="result"></div>
 
         <div class="game-container no-visibility">
-            <h2>The Game</h2>
+
             <div id="screen" class="game-screen">
 
+
             </div>
+            <div class="line vertical-line right-line">_</div>
+            <div class="line vertical-line">_</div>
+            <div class="line horizontal-line right-line">_</div>
+            <div class="line horizontal-line">_</div>
             <div class="reset-button" onclick="resetClick()">RESET</div>
         </div>
-        <div id="start-button" class="start-button" onclick="start()">START</div>
-        <div id="time-bar"></div>
+
+        <div class="game-menu">
+            <div id="start-button" class="start-button" onclick="start()">Iniciar partida!</div>
+
+        </div>
+
 
     </main>
 </body>
