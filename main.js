@@ -3,6 +3,7 @@
 // 0 = player1   1 = player2
 let currentPlayer = 1;
 let isPlaying = false;
+let gameMode = 0;
 let isWin = false;
 let winner = 0;
 let turn = 0;
@@ -54,9 +55,9 @@ function draw() {
             }
         }
     }
-    currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
-    currentPlayerRender();
 
+
+    currentPlayerRender();
     checkStateGame();
     if (isWin || turn == 10) {
         playersCointainer.classList.add("no-visibility");
@@ -144,6 +145,7 @@ function draw() {
 function currentPlayerRender() {
 
     if (isPlaying) {
+        currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
         if (currentPlayer == 0) {
             player2.classList.add("no-visibility");
             player1.classList.remove("no-visibility");
