@@ -14,6 +14,7 @@ let playersCointainer = document.getElementById("players");
 let player1 = document.getElementById("player-1");
 let player2 = document.getElementById("player-2");
 let gameContainer = document.getElementsByClassName("game-container")[0];
+let gameModeContainer = document.getElementById("game-mode");
 let startButton = document.getElementById("start-button");
 let timerElement = document.getElementById("time-bar");
 let replay = document.getElementById("reset-button");
@@ -60,14 +61,13 @@ function draw() {
     currentPlayerRender();
     checkStateGame();
     if (isWin || turn == 10) {
-        playersCointainer.classList.add("no-visibility");
-        replay.classList.remove("no-visibility");
+        changeVisibility(playersCointainer, replay);
         if (isWin) {
-            let winnerStr = winner == 1 ? "Player 1" : "Player 2"
+            let winnerStr = winner == 1 ? "X" : "O"
             document.getElementById("result").innerHTML = "Ha ganado la partida " + winnerStr;
             scores[winner == 1 ? 0 : 1]++;
             updateScores();
-            timerElement.classList.add("no-visibility");
+            changeVisibility(timerElement);
         } else {
             document.getElementById("result").innerHTML = "Ha acabado la partida com empate"
         }
@@ -97,17 +97,16 @@ function draw() {
     let tempFilled = false;
 
     function clickItem(e) {
+
         if (isPlaying && tempFilled) {
-            tempFilled = false;
-            currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
-            turn++;
-            currentTime = roundTime;
-            draw();
-
-
+            if (gameMode == 1 && currentPlayer == 1) {} else {
+                tempFilled = false;
+                currentState[parseInt(e.target.getAttribute("position"))] = currentPlayer + 1;
+                turn++;
+                currentTime = roundTime;
+                draw();
+            }
         }
-
-
     }
 
 
@@ -146,12 +145,11 @@ function currentPlayerRender() {
 
     if (isPlaying) {
         currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
-        if (currentPlayer == 0) {
-            player2.classList.add("no-visibility");
-            player1.classList.remove("no-visibility");
-        } else {
-            player1.classList.add("no-visibility");
-            player2.classList.remove("no-visibility");
+        if (currentPlayer == 0 && player1.classList.contains("no-visibility")) {
+            changeVisibility(player1, player2);
+        }
+        if (currentPlayer == 1 && player2.classList.contains("no-visibility")) {
+            changeVisibility(player1, player2);
         }
     }
 
@@ -166,7 +164,12 @@ function startTimer() {
     timerElement.innerHTML = currentTime;
 
     let loopTimer = setInterval(() => {
-
+        //How much time the robot takes to play
+        let robotSpeed = 2;
+        if (currentPlayer == 1 && gameMode == 1 && currentTime < roundTime - robotSpeed) {
+            currentTime = roundTime;
+            randomPick();
+        }
         if (currentTime <= 0.5) {
             currentTime = roundTime;
             randomPick();
@@ -182,7 +185,9 @@ function startTimer() {
 
 
 }
-
+/**
+ * Function to select a random spot
+ */
 function randomPick() {
     let choiceMake = false;
     while (!choiceMake) {
@@ -211,13 +216,30 @@ function randomPick() {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
 /**
+ * Funtion to define gameMode
+ * @param  gameMode {int} 
+ */
+function setGameMode(gameM) {
+    gameMode = gameM;
+    changeVisibility(gameModeContainer);
+    start();
+}
+/**
+ * Funtion to setup game
+ */
+function setupGame() {
+
+    changeVisibility(startButton, gameModeContainer);
+}
+/**
+ * 
  * Function to reset the game
  */
 function resetClick() {
     currentState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    gameContainer.classList.add("no-visibility");
-    replay.classList.add("no-visibility");
+    changeVisibility(gameContainer, replay);
     document.getElementById("result").innerHTML = ""
     start();
     currentPlayer = 1;
@@ -233,18 +255,29 @@ function start() {
     let title = document.getElementById("title");
     let scoresContainer = document.getElementById("scores");
     title.classList.add("in-game-header");
-    playersCointainer.classList.remove("no-visibility");
-    gameContainer.classList.remove("no-visibility");
-    timerElement.classList.remove("no-visibility");
-    scoresContainer.classList.remove("no-visibility");
     currentTime = 15;
     isPlaying = true;
     isWin = false;
     turn = 1;
-    startButton.classList.add("no-visibility");
+    changeVisibility(playersCointainer, gameContainer, timerElement, scoresContainer);
     startTimer();
     currentPlayerRender();
 
+}
+
+/**
+ * Function that adds or removes no-visibility
+ * @param HTMLelements {...any} 
+ */
+function changeVisibility(...elements) {
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].classList.contains("no-visibility")) {
+            elements[i].classList.remove("no-visibility");
+        } else {
+            elements[i].classList.add("no-visibility");
+        }
+
+    }
 }
 
 /**
