@@ -223,15 +223,41 @@ function getRandomInt(min, max) {
  */
 function setGameMode(gameM) {
     gameMode = gameM;
-    changeVisibility(gameModeContainer);
-    start();
+    slideElement(1, gameModeContainer);
+    setTimeout(() => start(), 1500);
+
 }
 /**
  * Funtion to setup game
  */
 function setupGame() {
+    slideElement(1, startButton);
+    setTimeout(() => slideElement(0, gameModeContainer), 600);
+}
+/**
+ * Funtion to setup game
+ * @param slideType {int} 
+ */
+function slideElement(slideT, element) {
+    if (slideT == 0) {
+        element.classList.add("slide-in");
+        changeVisibility(element);
+        setTimeout(() => {
 
-    changeVisibility(startButton, gameModeContainer);
+            element.classList.remove("slide-in");
+
+        }, 1500);
+
+    } else {
+
+        element.classList.add("slide-out");
+        setTimeout(() => {
+            changeVisibility(element);
+            element.classList.remove("slide-out");
+
+        }, 1000);
+    }
+
 }
 /**
  * 
@@ -259,6 +285,7 @@ function start() {
     isPlaying = true;
     isWin = false;
     turn = 1;
+
     changeVisibility(playersCointainer, gameContainer, timerElement, scoresContainer);
     startTimer();
     currentPlayerRender();

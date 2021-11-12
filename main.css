@@ -82,6 +82,7 @@ main {
 .start-button {
     font-size: 5rem;
     margin-top: 150px;
+    min-width: 5em;
     text-align: center;
     padding: 20px 10px;
     transition: 0.5s;
@@ -213,6 +214,43 @@ main {
     font-size: 4rem;
     transition: 0.5s;
     cursor: pointer;
+}
+
+.slide-in {
+    animation: slide-in-anim 1s;
+}
+
+.slide-out {
+    animation: slide-out-anim 2s;
+}
+
+@keyframes slide-in-anim {
+    0% {
+        margin-right: 100em;
+    }
+    100% {
+        margin-right: 0em;
+    }
+}
+
+@keyframes slide-out-anim {
+    0% {
+        margin-left: 1em;
+    }
+    1% {
+        transform: scale(1.2);
+    }
+    2% {
+        transform: scale(1);
+    }
+    5% {
+        margin-left: -5em;
+        transform: scale(0.5, 1.5);
+    }
+    100% {
+        transform: scale(4, 0.4);
+        margin-left: 100em;
+    }
 }
 
 .no-visibility {
