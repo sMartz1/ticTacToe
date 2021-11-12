@@ -89,7 +89,8 @@ main {
 }
 
 .start-button:hover,
-.reset-button:hover {
+.reset-button:hover,
+.game-type:hover {
     transform: scale(1.2);
 }
 
@@ -184,6 +185,34 @@ main {
     font-size: 4rem;
     width: 100%;
     justify-content: space-around;
+}
+
+.game-menu {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    align-items: center;
+}
+
+.game-mode {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.game-options {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 7rem;
+}
+
+.game-type {
+    font-size: 4rem;
+    transition: 0.5s;
+    cursor: pointer;
 }
 
 .no-visibility {

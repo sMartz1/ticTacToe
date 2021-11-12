@@ -13,11 +13,11 @@
 <body>
     <main>
         <div id="title" class="title">TIC TAC TOE</div>
-        <div id="time-bar"></div>
+        <div id="time-bar" class="no-visibility"></div>
 
-        <div id="players" class="players">
-            <div id="player-1" class="left-player no-visibility">Player1</div>
-            <div id="player-2" class="right-player no-visibility">Player2</div>
+        <div id="players" class="players no-visibility">
+            <div id="player-1" class="left-player">Turno de X</div>
+            <div id="player-2" class="right-player no-visibility">Turno de O</div>
 
         </div>
         <div id="result"></div>
@@ -36,10 +36,14 @@
         </div>
 
         <div class="game-menu">
-            <div id="start-button" class="start-button" onclick="start()">Iniciar partida!</div>
-            <div id="game-mode">
-                <div class="game-type">Humano</div>
-                <div class="game-type">Robot</div>
+            <div id="start-button" class="start-button" onclick="setupGame()">Iniciar partida!</div>
+            <div id="game-mode" class="game-mode  no-visibility">
+                Contra quien vas a jugar
+                <div class="game-options">
+                    <div class="game-type" onclick="setGameMode(0)">Humano</div>
+
+                    <div class="game-type" onclick="setGameMode(1)">Robot</div>
+                </div>
             </div>
 
         </div>
